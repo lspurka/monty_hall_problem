@@ -2,6 +2,7 @@
 #!/usr/bin/python
 
 import matplotlib.pyplot as plt
+import argparse
 import random
 import seaborn as sns
 
@@ -42,36 +43,34 @@ def run_simulation(generate_plot=True, num_of_minigames=100, num_of_simulations=
     no_change_percent_right = round(100 * (no_change_wins / num_of_minigames), 2)
     change_percent_right = round(100 * (change_wins / num_of_minigames), 2)
 
-    print(f"If you never change your answer in {num_of_minigames} tries, you'll win the car \
-            {no_change_percent_right}% of the time.")
+    print(f"If you never change your answer in {num_of_minigames} tries, you'll win the car " \
+            "{no_change_percent_right}% of the time.")
 
-    print(f"If you always change your answer in {num_of_minigames} tries, you'll win the car {change_percent_right}% \ 
-            of the time.")
+    print(f"If you always change your answer in {num_of_minigames} tries, you'll win the car {change_percent_right}% " \
+            "of the time.")
 
-
-
-# TODO make this into a function
-# Make distribution of outcomes
-sns.distplot(change_wins_list)
-plt.title(f"Frequency of Wins if you always change your mind ({num_of_minigames} games of {total_num_of_tries} times\
-         changing your mind within each game)")
-plt.xlabel("Fraction of Wins in One Game")
-plt.ylabel("Frequency of Game Wins")
-plt.show()
-plt.close()
+    if generate_plot:
+        plot_histogram(change_wins_list=change_wins_list, num_of_minigames=num_of_minigames, 
+                num_of_simulations=num_of_simulations)
 
 
-
-
+def plot_histogram(change_wins_list, num_of_minigames, num_of_simulations):
+    sns.distplot(change_wins_list)
+    plt.title(f"Frequency of Wins if you always change your mind ({num_of_minigames} games of {num_of_simulations} " \
+            "simulations)")
+    plt.xlabel("Fraction of Wins in One Game")
+    plt.ylabel("Frequency of Game Wins")
+    plt.show()
+    plt.close()
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run Monty Hall Simulation!")
     parser.add_argument("--plot", "-p", type=bool, dest="generate_plot", help="bool, if True, plot will be generated.")
-    parser.add_argument("--num_of_minigames", "-m", type=int, dest="num_of_minigames", help="Number of minigames within each simulation, 100 as default.")
-    parser.add_argument("--num_of_simulations", "-s", type=int, dest="num_of_simulations", help="Number of simulated minigames, 1000 as default.")
+    parser.add_argument("--num_of_minigames", "-m", type=int, dest="num_of_minigames", help="Number of minigames " \
+            "within each simulation, 100 as default.")
+    parser.add_argument("--num_of_simulations", "-s", type=int, dest="num_of_simulations", help="Number of simulated " \
+            "minigames, 1000 as default.")
     args = parser.parse_args()
-    generate_plot, num_of_minigames, num_of_simulations = args.generate_plot, args.num_of_minigames, 
-            args.num_of_simulations
-    run_simulation(generate_plot=generate_plot, num_of_minigames=num_of_minigames,      
-            num_of_simulations=num_of_simulations)
+    generate_plot, num_of_minigames, num_of_simulations = args.generate_plot, args.num_of_minigames, args.num_of_simulations
+    run_simulation(generate_plot=generate_plot, num_of_minigames=num_of_minigames, num_of_simulations=num_of_simulations)
