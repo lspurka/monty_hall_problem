@@ -51,7 +51,7 @@ def run_simulation(generate_plot=True, num_of_minigames=100, num_of_simulations=
 
 def plot_histogram(wins_list, num_of_minigames, num_of_simulations):
     sns.histplot(wins_list)
-    plt.title(f"Frequency of Wins if you always change your mind ({num_of_minigames} games of {num_of_simulations} " \
+    plt.title(f"Frequency of Wins if you always change your choice ({num_of_minigames} games of {num_of_simulations} " \
             "simulations)")
     plt.xlabel("Fraction of Wins in One Game")
     plt.ylabel("Frequency of Game Wins")
