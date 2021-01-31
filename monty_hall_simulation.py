@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 
 import matplotlib.pyplot as plt
@@ -7,7 +6,8 @@ import random
 import seaborn as sns
 
 def run_simulation(generate_plot=True, num_of_minigames=100, num_of_simulations=1000):
-    """Run Monty Hall Simulation, either changing choosen door or not changing.
+    """Run Monty Hall Simulation, either changing the choosen door or not changing.
+    Monty Hall Problem explained here: https://en.wikipedia.org/wiki/Monty_Hall_problem
     :param generate_plot: bool, if True, will generate plot
     :param num_of_minigames: int, number of minigames within each simulation
     :param num_of_simulations: int, number of simulated minigames
@@ -21,19 +21,21 @@ def run_simulation(generate_plot=True, num_of_minigames=100, num_of_simulations=
         no_change_wins = 0.0
         change_wins = 0.0
         for x in range(num_of_minigames):
-            random_list = random.sample(["C","G","G"], 3)
-            random_choice = random.sample(range(3), 1)[0]
+            selection_list = random.sample(["car", "goat", "goat"], 3)
+            player_choice = random.sample(range(3), 1)[0]
             # no change
-            if random_list[random_choice] == 'C':
+            if selection_list[player_choice] == "car":
                 no_change_wins += 1
             # change answer
-            random_list.pop(random_choice)
-            if "C" in random_list:
+            # The following logic works out because one of the doors is opened, revealing a goat.  If the player changes
+            # their choice, then there is just one door remaining.  We can essentially get rid of the player_choice and
+            # if either remaining choice is the car, the player wins.
+            selection_list.pop(player_choice)
+            if "car" in selection_list:
                 change_wins += 1  
         
         no_change_wins_list.append((no_change_wins / num_of_minigames))
         change_wins_list.append((change_wins / num_of_minigames))
-
 
     no_change_percent_right = round(100 * (no_change_wins / num_of_minigames), 2)
     change_percent_right = round(100 * (change_wins / num_of_minigames), 2)
