@@ -34,8 +34,8 @@ def run_simulation(generate_plot=True, num_of_minigames=100, num_of_simulations=
         no_change_wins_list.append((no_change_wins / num_of_minigames))
         change_wins_list.append((change_wins / num_of_minigames))
 
-    no_change_percent_right = round(100 * (no_change_wins / num_of_minigames), 2)
-    change_percent_right = round(100 * (change_wins / num_of_minigames), 2)
+    no_change_percent_right = round(100 * (np.array(no_change_wins_list).mean()), 2)
+    change_percent_right = round(100 * (np.array(change_wins_list).mean()), 2)
 
     print(f"If you never change your answer in {num_of_minigames} games, you'll win the car about " \
             f"{no_change_percent_right}% of the time.")
